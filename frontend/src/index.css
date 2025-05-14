@@ -1,0 +1,16 @@
+@import "tailwindcss";
+body{
+    @apply bg-slate-100;
+}
+.userTable{
+    @apply bg-white
+}
+
+
+.userTable th{
+    @apply border-2 border-slate-200 text-base font-bold p-2 text-xl
+}
+
+.userTable td{
+    @apply border-2 border-slate-200 text-center p-2 text-xl
+}
