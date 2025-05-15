@@ -33,7 +33,7 @@ linkon/
 
 ## 🧰 Tech Stack
 
-- *Frontend:* React, Tailwind
+- *Frontend:* Vite React, Tailwind
 - *Backend:* Node.js, Express.js
 - *Database:* MongoDB with Mongoose
 - *Authentication:* JWT (JSON Web Tokens)
