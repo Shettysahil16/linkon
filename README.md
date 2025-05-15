@@ -78,12 +78,16 @@ cd frontend
 npm install moment react-icons react-redux react-router-dom react-toastify
 ```
 
- # Step 6: create a .env file in /frontend and add the following:
-```bash
+ # Step 6: Create a `.env` file in `/frontend` and add the following:
+
+```env
+# Create a free Cloudinary account at https://cloudinary.com/
+# You'll find your Cloud Name in the Cloudinary Dashboard → Account Details
 REACT_APP_CLOUD_NAME=your_cloudinary_id
 ```
 
-# Step 6: Start frontend server
+
+# Step 7: Start frontend server
 ```bash
 npm run dev
 ```
