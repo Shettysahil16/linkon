@@ -1,8 +1,9 @@
-const userModel = require('../models/userModel');
+const userModel = require("../../models/userModel");
 const bcrypt = require("bcryptjs");
 
 const userSignUpController = async(req,res) =>{
     try {
+        userModel
         const {username, email, password} = req.body;
         const userExist = await userModel.findOne({email});
         
