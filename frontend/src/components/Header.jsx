@@ -32,7 +32,7 @@ const Header = () => {
     if (userLoggedOut.success) {
       toast.success(userLoggedOut.message);
       dispatch(setUserDetails(null));
-      navigate("/");
+      navigate("/login");
     }
   }
 
