@@ -83,7 +83,7 @@ npm install moment react-icons react-redux react-router-dom react-toastify
 ```env
 # Create a free Cloudinary account at https://cloudinary.com/
 # You'll find your Cloud Name in the Cloudinary Dashboard → Account Details
-REACT_APP_CLOUD_NAME=your_cloudinary_id
+VITE_APP_CLOUD_NAME=your_cloudinary_id
 ```
 
 
