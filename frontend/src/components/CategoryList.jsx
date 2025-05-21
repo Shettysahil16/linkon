@@ -3,8 +3,9 @@ import summaryApi from '../common';
 import { Link } from 'react-router-dom';
 
 const CategoryList = () => {
+  const productLoading = new Array(9).fill(null);
     const[productCategory, setProductCategory] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const fetchCategoryProduct = async() => {
         setLoading(true);
         const dataResponse = await fetch(summaryApi.productCategory.url,{
@@ -25,11 +26,9 @@ const CategoryList = () => {
       {
         loading ? 
         (
-          productCategory.map((index) => {
+          productLoading.map((_,index) => {
             return(
-                <div key={index} className='flex flex-col gap-1 cursor-pointer'>
-                <div className='rounded-full bg-slate-200 h-24 w-24 md:h-32 md:w-32 p-7 overflow-hidden flex justify-center items-center animate-pulse'>
-                </div>
+                <div key={index} className='rounded-full bg-slate-200 h-24 w-24 md:h-32 md:w-32 p-7 overflow-hidden animate-pulse'>
                 </div>
             )
         })

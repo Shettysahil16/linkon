@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import image1 from '../assets/banner/img1.webp'
 import image2 from '../assets/banner/img2.webp'
 import image3 from '../assets/banner/img3.jpg'
@@ -15,7 +15,7 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 
 function Carousel() {
-    const [currentImage, setCurrentImage] = useState(4);
+    const [currentImage, setCurrentImage] = useState(0);
     
     const desktopImages = [
         image1,
@@ -44,6 +44,17 @@ function Carousel() {
             setCurrentImage(currentImage + 1)
         }
     }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImage((prev) => (prev === 4 ? 0 : prev + 1));
+        },3000)
+
+        return(() => {
+            clearInterval(interval);
+        })
+    },[])
+
     return (
         <div>
             <div className='h-[30vh] md:h-[50vh] w-full bg-slate-200 relative flex items-center overflow-hidden'>
