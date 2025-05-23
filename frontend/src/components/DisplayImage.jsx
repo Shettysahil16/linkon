@@ -3,22 +3,26 @@ import PropTypes from 'prop-types';
 import { ImCancelCircle } from "react-icons/im";
 
 function DisplayImage({
-    imageUrl,
-    onClose,
+  imageUrl,
+  onClose,
 }) {
   return (
-    <div className='h-full w-full fixed top-0 bottom-0 left-0 flex justify-center items-center z-20'>
-      <div className='bg-white shadow-2xl w-full max-w-[80vh] h-full max-h-[80vh] mx-auto p-2'>
-        <ImCancelCircle className='hover:text-red-500 cursor-pointer text-3xl w-fit block ml-auto' onClick={onClose}/>
-      <img src={imageUrl} alt="product image" className='h-full w-full'/>
+    <div className='fixed inset-0 flex justify-center items-center z-20'>
+      <div className='bg-white shadow-2xl min-w-2xl mx-auto p-2'>
+        <div className='w-fit ml-auto text-3xl hover:text-red-500 cursor-pointer' onClick={onClose}>
+          <ImCancelCircle />
+        </div>
+        <div className='max-h-[80vh] flex justify-center p-2'>
+          <img src={imageUrl} alt="product image" className='h-[75vh]' />
+        </div>
       </div>
     </div>
   )
 }
 
 DisplayImage.propTypes = {
-    imageUrl : PropTypes.string,
-    onClose : PropTypes.func
+  imageUrl: PropTypes.string,
+  onClose: PropTypes.func
 }
 
 export default DisplayImage

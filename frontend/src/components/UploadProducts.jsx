@@ -255,6 +255,7 @@ function UploadProducts({
 
 UploadProducts.propTypes = {
     onClose: PropTypes.func,
+    fetchProductDetails : PropTypes.func,
 }
 
 export default UploadProducts

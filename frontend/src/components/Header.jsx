@@ -38,7 +38,7 @@ const Header = () => {
 
   return (
     <>
-      <header className='h-20 shadow-md bg-white'>
+      <header className='h-20 shadow-md bg-white fixed w-full z-20'>
         <div className='h-full container mx-auto flex items-center justify-between px-4'>
           <div>
             <Link to={""}>
@@ -73,9 +73,9 @@ const Header = () => {
               {
                 user?.role === ROLE.ADMIN && (
                   showAdminPanel && (
-                    <div className='absolute top-17 bg-white p-2 md:flex hidden' onClick={() => setShowAdminPanel(!showAdminPanel)}>
+                    <div className='absolute top-17 bg-white p-2 md:flex hidden z-10' onClick={() => setShowAdminPanel(!showAdminPanel)}>
                       <nav>
-                        <Link to={"/admin-panel/all-products"} className='whitespace-nowrap hover:bg-slate-200 p-2 rounded-md'>Admin panel</Link>
+                        <Link to={"/admin-panel/all-products"} className='w-full whitespace-nowrap hover:bg-slate-200 p-2 rounded-md'>Admin panel</Link>
                       </nav>
                     </div>
                   )
