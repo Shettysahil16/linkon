@@ -1,22 +1,31 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct';
 import displayINRCurrency from '../helpers/displayCurrency';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import addToCart from '../helpers/addToCart';
+import PropTypes from 'prop-types';
+import Context from '../context';
 
 const HorizontalCardProduct = ({ category, heading }) => {
     const [data, setData] = useState([]);
     const loadingList = new Array(9).fill(null);
     const [loading, setLoading] = useState(true);
     const scrollElement = useRef();
+    const { fetchCartProductCounts } = useContext(Context);
 
     const fetchData = async () => {
         setLoading(true);
         const products = await fetchCategoryWiseProduct(category);
         setLoading(false);
         setData(products?.data);
+    }
+
+    const handleAddToCartProduct = async(e,id) => {
+        await addToCart(e,id);
+        fetchCartProductCounts()
     }
 
     useEffect(() => {
@@ -81,7 +90,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
                                                     <p className='text-slate-500 line-through'>{displayINRCurrency(product?.price)}</p>
                                                 </div>
                                                 <div className='absolute  right-1 md:right-2 bottom-4 text-xs md:text-xl text-white'>
-                                                    <button className='bg-green-400 py-2 px-4 rounded-full hover:scale-105 transition-all'>
+                                                    <button className='bg-green-400 py-2 px-4 rounded-full hover:scale-105 transition-all'
+                                                     onClick={(e) => {
+                                                        handleAddToCartProduct(e,product?._id)
+                                                        }}>
                                                         Add to Cart
                                                     </button>
                                                 </div>
@@ -96,6 +108,11 @@ const HorizontalCardProduct = ({ category, heading }) => {
             }
         </div>
     )
+}
+
+HorizontalCardProduct.propTypes = {
+    category: PropTypes.string,
+    heading : PropTypes.string,
 }
 
 export default HorizontalCardProduct

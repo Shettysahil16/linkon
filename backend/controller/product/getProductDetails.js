@@ -1,13 +1,15 @@
 const productModel = require("../../models/productModel");
 
-const getCategoryWiseProduct = async (req, res) => {
+const getProductDetails = async (req, res) => {
   try {
-    const {category} = req.body || req?.query;
-    const product = await productModel.find({category});
+    const {productId} = req.body;
+
+    const productDetails = await productModel.findById(productId);
+    
     return res.status(200).json({
-        data : product,
+        data : productDetails,
         success : true,
-        error : false,
+        error : false
     })
   } catch (error) {
     return res.status(500).json({
@@ -18,4 +20,4 @@ const getCategoryWiseProduct = async (req, res) => {
   }
 };
 
-module.exports = getCategoryWiseProduct;
+module.exports = getProductDetails;

@@ -10,7 +10,7 @@ import Spinner from '../components/Spinner';
 function Login() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const { fetchUserDetails } = useContext(Context);
+    const { fetchUserDetails, fetchCartProductCounts } = useContext(Context);
     const [showPassword, setShowPassword] = useState(false);
     const [data, setData] = useState({
         email: "",
@@ -43,6 +43,7 @@ function Login() {
         if (loggedUser.success) {
             toast.success(loggedUser.message);
             fetchUserDetails();
+            fetchCartProductCounts();
             navigate("/");
         }
 

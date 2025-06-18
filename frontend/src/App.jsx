@@ -12,6 +12,7 @@ import loadingGif from './assets/loading.gif';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [cartProductCount, setCartProductCount] = useState(0);
   const dispatch = useDispatch();
   const fetchUserDetails = async () => {
     setLoading(true);
@@ -29,8 +30,24 @@ function App() {
       dispatch(setUserDetails(userData.data));
     }
   }
+
+  const fetchCartProductCounts = async() => {
+    const dataResponse = await fetch(summaryApi.cartProductCount.url,{
+      method : summaryApi.cartProductCount.method,
+      credentials: 'include',
+    })
+
+    const cartProductCount = await dataResponse.json();
+    
+
+    if(cartProductCount.success){
+      setCartProductCount(cartProductCount?.data?.count);
+    }
+  }
+
   useEffect(() => {
     fetchUserDetails();
+    fetchCartProductCounts();
   }, [])
 
   if (loading) {
@@ -43,7 +60,9 @@ function App() {
   return (
     <>
       <Context.Provider value={{
-        fetchUserDetails
+        fetchUserDetails, // fetches user details 
+        fetchCartProductCounts, // fetches cart product count
+        cartProductCount, // cart product count variable
       }}>
         <ToastContainer
           autoClose={3000}

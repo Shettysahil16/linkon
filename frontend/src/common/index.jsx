@@ -44,8 +44,18 @@ const summaryApi = {
     productCategoryWise : {
         url : `${backendDomain}/api/category-product`,
         method : "post",
-    }
+    },
+    productDetails : {
+        url : `${backendDomain}/api/product-details`,
+        method : "post",
+    },
+    addToCartProduct : {
+        url : `${backendDomain}/api/addtocart`,
+        method : "post",
+    },
+    cartProductCount : {
+        url : `${backendDomain}/api/cart-product-count`,
+        method : "get",
+    },
 }
-
-
 export default summaryApi;

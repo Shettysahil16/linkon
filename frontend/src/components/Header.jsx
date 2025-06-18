@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Logo from './Logo';
 import { IoSearchSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { setUserDetails } from '../../../../kinkon/frontend/src/store/userSlice';
 import Spinner from './Spinner';
 import ROLE from '../common/role';
+import Context from '../context';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
+  const context = useContext(Context);
 
   const handleUserLogout = async (e) => {
     e.preventDefault();
@@ -84,12 +86,18 @@ const Header = () => {
             </div>
               )
             }
-            <div className='text-3xl relative cursor-pointer'>
+            {
+              user?._id && (
+                <div className='text-3xl relative cursor-pointer'>
               <FaShoppingCart />
               <p className='h-5 w-5 absolute bg-green-500 -top-1 -right-2 rounded-full text-sm text-white flex items-center justify-center p-1'>
-                0
+                {
+                  context?.cartProductCount
+                }
               </p>
             </div>
+              )
+            }
             {
               loading ? <Spinner/> :(
                 user ? (

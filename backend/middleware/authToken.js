@@ -6,7 +6,7 @@ const authToken = async(req,res,next) => {
         const token = req.cookies?.token;
         if(!token){
             return res.status(401).json({
-                message: "please authenticate using a valid token",
+                message: "please login",
                 error: true,
                 success: false,
             })

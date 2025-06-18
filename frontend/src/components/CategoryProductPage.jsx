@@ -1,19 +1,16 @@
-import React, { useRef } from 'react'
-import { useEffect, useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react'
 import fetchCategoryWiseProduct from '../helpers/fetchCategoryWiseProduct';
 import displayINRCurrency from '../helpers/displayCurrency';
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import addToCart from '../helpers/addToCart';
 import PropTypes from 'prop-types';
 import Context from '../context';
 
-const VerticalCardProduct = ({ category, heading }) => {
+const CategoryProductPage = ({ category, heading }) => {
     const [data, setData] = useState([]);
     const loadingList = new Array(9).fill(null);
     const [loading, setLoading] = useState(true);
-    const scrollElement = useRef();
     const { fetchCartProductCounts } = useContext(Context);
 
     const fetchData = async () => {
@@ -31,13 +28,6 @@ const VerticalCardProduct = ({ category, heading }) => {
     useEffect(() => {
         fetchData();
     }, [])
-    const prevScroll = () => {
-        scrollElement.current.scrollLeft -= 300;
-    }
-
-    const nextScroll = () => {
-        scrollElement.current.scrollLeft += 300;
-    }
     return (
         <div className='my-4 mr-4 p-4 flex flex-col gap-4 relative'>
             <h1 className='font-semibold text-2xl sm:text-4xl'>{heading}</h1>
@@ -60,7 +50,6 @@ const VerticalCardProduct = ({ category, heading }) => {
                                                 </div>
                                                 <div className='w-fit mx-auto text-xs md:text-xl text-white mt-2'>
                                                     <button className='bg-slate-200 py-3 px-15 md:py-4 md:px-28 rounded-full hover:scale-105 transition-all animate-pulse'>
-                                                       
                                                     </button>
                                                 </div>
                                             </div>
@@ -73,13 +62,11 @@ const VerticalCardProduct = ({ category, heading }) => {
                     )
                     :
                     (
-                        <div className='flex gap-15 overflow-x-scroll scrollbar-none items-center transition-all' ref={scrollElement}>
-                            <button className='hidden xl:block h-fit w-fit rounded-full absolute left-0 z-10 py-3 px-3 bg-blue-500 text-white shadow-md text-lg' onClick={prevScroll}><FaAngleLeft /></button>
-                            <button className='hidden xl:block h-fit w-fit rounded-full absolute right-0  z-10 py-3 px-3 bg-blue-500 text-white shadow-md text-lg' onClick={nextScroll}><FaAngleRight /></button>
+                        <div className='flex flex-wrap gap-5 overflow-x-scroll scrollbar-none items-center transition-all'>
                             {
                                 data.map((product, index) => {
                                     return (
-                                        <Link to={"/product-details/"+product?._id} key={index} className='h-56 md:h-[30rem] w-full min-w-[150px] max-w-[200px] md:min-w-[300px] md:max-w-[450px] bg-white shadow-md flex flex-col rounded-md relative cursor-pointer'>
+                                        <Link to={"/product-details/"+product?._id} key={index} className='h-56 md:h-[30rem] w-full min-w-[150px] max-w-[200px] md:min-w-[300px] md:max-w-[350px] bg-white shadow-md flex flex-col rounded-md relative cursor-pointer'>
                                             <div className='bg-slate-300 h-24 p-2 min-w-[120px]  md:min-w-[180px] md:h-68 flex justify-center'>
                                                 <img src={product.productImage[0]} alt="product image" className='h-full p-2 hover:scale-110 transition-all' />
                                             </div>
@@ -108,9 +95,9 @@ const VerticalCardProduct = ({ category, heading }) => {
     )
 }
 
-VerticalCardProduct.propTypes = {
+CategoryProductPage.propTypes = {
     category: PropTypes.string,
     heading : PropTypes.string,
 }
 
-export default VerticalCardProduct
+export default CategoryProductPage

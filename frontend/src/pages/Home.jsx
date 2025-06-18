@@ -6,7 +6,7 @@ import VerticalCardProduct from '../components/VerticalCardProduct'
 
 const Home = () => {
   return (
-    <div className=''>
+    <div>
       <Carousel/>
       <CategoryList/>
       <HorizontalCardProduct category={"airpodes"} heading={"Top Airpodes"}/>
