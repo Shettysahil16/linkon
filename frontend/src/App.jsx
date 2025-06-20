@@ -37,11 +37,11 @@ function App() {
       credentials: 'include',
     })
 
-    const cartProductCount = await dataResponse.json();
+    const responseCartProductCount = await dataResponse.json();
     
 
-    if(cartProductCount.success){
-      setCartProductCount(cartProductCount?.data?.count);
+    if(responseCartProductCount.success){
+      setCartProductCount(responseCartProductCount?.data?.count);
     }
   }
 

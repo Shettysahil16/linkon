@@ -59,57 +59,57 @@ const Header = () => {
             {
               user?._id && (
                 <div className='relative flex flex-col items-center'>
-              <div onClick={() => setShowAdminPanel(!showAdminPanel)}>
-                {
-                  user.profilePic ? (
-                    <img src={user.profilePic} className='h-10 w-10 lg:h-12 lg:w-12 rounded-full text-xs' />
-                  ) :
-                    (
-                      <div className='flex flex-col justify-center items-center pt-5'>
-                        <FaRegUserCircle className='text-3xl lg:text-3xl' />
-                        <p>{user.username}</p>
-                      </div>
+                  <div onClick={() => setShowAdminPanel(!showAdminPanel)}>
+                    {
+                      user.profilePic ? (
+                        <img src={user.profilePic} className='h-10 w-10 lg:h-12 lg:w-12 rounded-full text-xs' />
+                      ) :
+                        (
+                          <div className='flex flex-col justify-center items-center pt-5'>
+                            <FaRegUserCircle className='text-3xl lg:text-3xl' />
+                            <p>{user.username}</p>
+                          </div>
+                        )
+                    }
+                  </div>
+                  {
+                    user?.role === ROLE.ADMIN && (
+                      showAdminPanel && (
+                        <div className='absolute top-17 bg-white p-2 md:flex hidden z-10' onClick={() => setShowAdminPanel(!showAdminPanel)}>
+                          <nav>
+                            <Link to={"/admin-panel/all-products"} className='w-full whitespace-nowrap hover:bg-slate-200 p-2 rounded-md'>Admin panel</Link>
+                          </nav>
+                        </div>
+                      )
                     )
-                }
-              </div>
-              {
-                user?.role === ROLE.ADMIN && (
-                  showAdminPanel && (
-                    <div className='absolute top-17 bg-white p-2 md:flex hidden z-10' onClick={() => setShowAdminPanel(!showAdminPanel)}>
-                      <nav>
-                        <Link to={"/admin-panel/all-products"} className='w-full whitespace-nowrap hover:bg-slate-200 p-2 rounded-md'>Admin panel</Link>
-                      </nav>
-                    </div>
-                  )
-                )
-              }
-            </div>
+                  }
+                </div>
               )
             }
             {
               user?._id && (
-                <div className='text-3xl relative cursor-pointer'>
-              <FaShoppingCart />
-              <p className='h-5 w-5 absolute bg-green-500 -top-1 -right-2 rounded-full text-sm text-white flex items-center justify-center p-1'>
-                {
-                  context?.cartProductCount
-                }
-              </p>
-            </div>
+                <Link to={"/cart"} className='text-3xl relative cursor-pointer'>
+                  <FaShoppingCart />
+                  <p className='h-5 w-5 absolute bg-green-500 -top-1 -right-2 rounded-full text-sm text-white flex items-center justify-center p-1'>
+                    {
+                      context?.cartProductCount
+                    }
+                  </p>
+                </Link>
               )
             }
             {
-              loading ? <Spinner/> :(
+              loading ? <Spinner /> : (
                 user ? (
-                <button onClick={handleUserLogout} className='text-xl text-white px-5 pb-2 pt-1 bg-green-500 rounded-full hover:bg-green-600 cursor-pointer'>
-                  logout
-                </button>
-              ) :
-                (
-                  <Link to={"/login"} className='text-xl text-white px-5 pb-2 pt-1 bg-green-500 rounded-full hover:bg-green-600 cursor-pointer'>
-                    login
-                  </Link>
-                )
+                  <button onClick={handleUserLogout} className='text-xl text-white px-5 pb-2 pt-1 bg-green-500 rounded-full hover:bg-green-600 cursor-pointer'>
+                    logout
+                  </button>
+                ) :
+                  (
+                    <Link to={"/login"} className='text-xl text-white px-5 pb-2 pt-1 bg-green-500 rounded-full hover:bg-green-600 cursor-pointer'>
+                      login
+                    </Link>
+                  )
               )
             }
           </div>

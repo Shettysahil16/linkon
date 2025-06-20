@@ -12,6 +12,7 @@ import ProtectedRoute from '../components/route_protection/ProtectedRoute';
 import Unauthorized from '../pages/Unauthorized';
 import AuthRoute from '../components/route_protection/AuthRoute';
 import ProductDetails from '../pages/ProductDetails';
+import Cart from '../pages/Cart';
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/product-details/:id",
         element: <ProductDetails/>
+      },
+      {
+        path: "/cart",
+        element: <Cart/>
       },
     ]
   },

@@ -57,5 +57,17 @@ const summaryApi = {
         url : `${backendDomain}/api/cart-product-count`,
         method : "get",
     },
+    cartProducts : {
+        url : `${backendDomain}/api/cart-products`,
+        method : "get",
+    },
+    updateCartProductQty : {
+        url : `${backendDomain}/api/update-cartProductQty`,
+        method : "put",
+    },
+    deleteCartProduct : {
+        url : `${backendDomain}/api/delete-cartProduct`,
+        method : "delete",
+    },
 }
-export default summaryApi;
+export default summaryApi; 
