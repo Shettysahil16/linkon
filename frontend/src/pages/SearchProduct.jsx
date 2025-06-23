@@ -5,27 +5,27 @@ import VerticalSearchCard from '../components/VerticalSearchCard';
 
 function SearchProduct() {
   const query = useLocation();
-  const [data,setData] = useState([]);
-  const [loading,setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const fetchSearchProducts = async() => {
+  const fetchSearchProducts = async () => {
     setLoading(true);
-    const dataResponse = await fetch(summaryApi.searchProducts.url+query.search,{
-      method : summaryApi.searchProducts.method,
-      credentials : 'include'
+    const dataResponse = await fetch(summaryApi.searchProducts.url + query.search, {
+      method: summaryApi.searchProducts.method,
+      credentials: 'include'
     })
     setLoading(false);
     const searchedProducts = await dataResponse.json();
-    
-    if(searchedProducts.success){
+
+    if (searchedProducts.success) {
       setData(searchedProducts.data);
     }
-    
+
   }
-  
+
   useEffect(() => {
     fetchSearchProducts();
-  },[query.search])
+  }, [query.search])
   return (
     <div className='container mx-auto text-xl'>
       {
@@ -34,17 +34,17 @@ function SearchProduct() {
         )
       }
       {
-        data.length === 0 && !loading &&(
+        data.length === 0 && !loading && (
           <p className='text-3xl font-medium pt-4 px-12 text-center'>No products found</p>
         )
       }
       {
         data.length !== 0 && !loading &&(
           <div>
-            <p className='text-3xl font-medium pt-4 px-12'>Search Results: {data.length}</p>
-            <VerticalSearchCard loading={loading} data={data}/>
+            <p className='text-3xl font-medium pt-4 px-12'>Search Results: {data?.length}</p>
+            <VerticalSearchCard loading={loading} data={data} />
           </div>
-          
+
         )
       }
     </div>
