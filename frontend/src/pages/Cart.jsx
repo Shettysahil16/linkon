@@ -6,18 +6,22 @@ import Context from '../context';
 import { MdDelete } from "react-icons/md";
 import { LuMinus } from "react-icons/lu";
 import { LuPlus } from "react-icons/lu";
+import Spinner from '../components/Spinner';
+
 
 const Cart = () => {
     const [data, setData] = React.useState([]);
+    const [loading, setLoading] = useState(false);
     const { fetchCartProductCounts, cartProductCount } = useContext(Context);
-    const totalQty = data.reduce((accumulator,currentValue) => accumulator + currentValue?.quantity, 0)
-    const totalPrice = data.reduce((accumulator,currentValue) => accumulator + (currentValue?.productId?.sellingPrice) * currentValue?.quantity, 0)
+    const totalQty = data.reduce((accumulator, currentValue) => accumulator + currentValue?.quantity, 0)
+    const totalPrice = data.reduce((accumulator, currentValue) => accumulator + (currentValue?.productId?.sellingPrice) * currentValue?.quantity, 0)
     const fetchCartProducts = async () => {
+        setLoading(true);
         const dataResponse = await fetch(summaryApi.cartProducts.url, {
             method: summaryApi.cartProducts.method,
             credentials: 'include',
         })
-
+        setLoading(false);
         const cartProducts = await dataResponse.json();
         //console.log(cartProducts);
 
@@ -46,23 +50,23 @@ const Cart = () => {
     }
 
     const decreaseCartProductQty = async (id, qty) => {
-        if(qty >= 2){
+        if (qty >= 2) {
             const dataResponse = await fetch(summaryApi.updateCartProductQty.url, {
-            method: summaryApi.updateCartProductQty.method,
-            credentials: 'include',
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify({
-                productId: id,
-                qty: qty - 1
-            }),
-        })
-        const decreasedQty = await dataResponse.json();
+                method: summaryApi.updateCartProductQty.method,
+                credentials: 'include',
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    productId: id,
+                    qty: qty - 1
+                }),
+            })
+            const decreasedQty = await dataResponse.json();
 
-        if (decreasedQty.success) {
-            fetchCartProducts();
-        }
+            if (decreasedQty.success) {
+                fetchCartProducts();
+            }
         }
     }
 
@@ -94,6 +98,7 @@ const Cart = () => {
     return (
         <>
             <div className='p-4 flex flex-col md:flex-row justify-between gap-10 h-full w-full'>
+                {loading && <Spinner />}
                 <div className='min-w-[60%] flex flex-col gap-8 rounded-sm'>
                     {
                         data.map((products, index) => {
@@ -135,35 +140,26 @@ const Cart = () => {
                     </div>
                     <div className='flex flex-col gap-2 px-1 py-5'>
                         <div className='flex justify-between text-xl font-medium'>
-                        <p>products :</p>
-                        <p className='px-4'>{cartProductCount}</p>
-                    </div>
-                    <div className='flex justify-between text-xl font-medium'>
-                        <p>quantity :</p>
-                        <p className='px-4'>{totalQty}</p>
-                    </div>
-                    <hr className="border border-slate-500 mt-5" />
-                    <div className='flex justify-between text-xl font-medium'>
-                        <p>Total :</p>
-                        <p className='px-2'>{displayINRCurrency(totalPrice)}</p>
-                    </div>
+                            <p>products :</p>
+                            <p className='px-4'>{cartProductCount}</p>
+                        </div>
+                        <div className='flex justify-between text-xl font-medium'>
+                            <p>quantity :</p>
+                            <p className='px-4'>{totalQty}</p>
+                        </div>
+                        <hr className="border border-slate-500 mt-5" />
+                        <div className='flex justify-between text-xl font-medium'>
+                            <p>Total :</p>
+                            <p className='px-2'>{displayINRCurrency(totalPrice)}</p>
+                        </div>
                     </div>
                     <div className='h-16 bg-blue-600 hover:bg-blue-700 transition-all w-full flex justify-center items-center text-xl font-medium text-white cursor-pointer'>
                         Checkout
+                    </div>
                 </div>
-                </div>
-                
             </div>
         </>
     )
 }
 
 export default Cart
-{/* <button className='border-e-2 py-1 px-2 md:py-2 md:px-5 cursor-pointer' onClick={() => decreaseCartProductQty(products?._id, products?.quantity)}> -</button >
-                                                <p className='px-2'>{products?.quantity}</p>
-                                                <button className='border-s-2 py-1 px-2 md:py-2 md:px-5 cursor-pointer' onClick={() => increaseCartProductQty(products?._id, products?.quantity)}>+</button> */}
-                                            //     <button className='text-lg border-2 py-1 px-2 md:py-2 md:px-3 rounded-xl font-medium text-red-500 hover:bg-red-500 hover:text-white transition-all cursor-pointer'
-                                            //     onClick={() => handleDeleteProduct(products?._id)}
-                                            // >
-                                            //     Remove
-                                            // </button>

@@ -59,6 +59,7 @@ const ProductDetails = () => {
       }
     };
     fetchProductDetails();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [params])
 
 

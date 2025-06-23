@@ -13,6 +13,7 @@ import Unauthorized from '../pages/Unauthorized';
 import AuthRoute from '../components/route_protection/AuthRoute';
 import ProductDetails from '../pages/ProductDetails';
 import Cart from '../pages/Cart';
+import SearchProduct from '../pages/SearchProduct';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart/>
+      },
+      {
+        path: "search",
+        element: <SearchProduct/>,
       },
     ]
   },

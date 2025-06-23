@@ -18,7 +18,7 @@ const updateProductController = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
-    return res.status(404).json({
+    return res.status(500).json({
       message: "Internal Server Error",
       success: false,
       error: true,

@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Logo from './Logo';
 import { IoSearchSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
@@ -19,6 +19,8 @@ const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const context = useContext(Context);
+  const searchInput = useLocation();
+  const [search, setSearch] = useState(searchInput?.search?.split("=")[1]);
 
   const handleUserLogout = async (e) => {
     e.preventDefault();
@@ -38,6 +40,18 @@ const Header = () => {
     }
   }
 
+    const handleSearch = (e) => {
+      const {value} = e.target;
+      setSearch(value)
+      if(value){
+        navigate(`/search?q=${value}`);
+      }
+      else{
+        navigate("/search")
+      }
+    }
+  
+
   return (
     <>
       <header className='h-20 shadow-md bg-white fixed w-full z-20'>
@@ -49,7 +63,7 @@ const Header = () => {
           </div>
 
           <div className='hidden lg:flex w-full max-w-md justify-between items-center border-1 border-slate-200 rounded-full pl-4 h-12 hover:shadow-md'>
-            <input type="text" placeholder='search products here...' className='text-lg w-full h-8 outline-none rounded-l-full' />
+            <input type="text" placeholder='search products here...' className='text-lg w-full h-8 outline-none rounded-l-full' onChange={(e) => handleSearch(e)} value={search} />
             <div className='text-2xl min-w-[60px] h-12 bg-green-700 flex justify-center items-center rounded-r-full text-white'>
               <IoSearchSharp />
             </div>
