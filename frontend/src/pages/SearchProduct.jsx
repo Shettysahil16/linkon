@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import summaryApi from '../common';
 import VerticalSearchCard from '../components/VerticalSearchCard';
+import loadingGif from '../assets/loading.gif';
 
 function SearchProduct() {
   const query = useLocation();
@@ -30,7 +31,9 @@ function SearchProduct() {
     <div className='container mx-auto text-xl'>
       {
         loading && (
-          <p>loading.....</p>
+          <div className='h-full w-full flex justify-center items-center opacity-50'>
+            <img src={loadingGif} alt="loading" />
+          </div>
         )
       }
       {
@@ -39,7 +42,7 @@ function SearchProduct() {
         )
       }
       {
-        data.length !== 0 && !loading &&(
+        data.length !== 0 && !loading && (
           <div>
             <p className='text-3xl font-medium pt-4 px-12'>Search Results: {data?.length}</p>
             <VerticalSearchCard loading={loading} data={data} />

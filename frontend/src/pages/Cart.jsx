@@ -23,7 +23,7 @@ const Cart = () => {
         })
         setLoading(false);
         const cartProducts = await dataResponse.json();
-        //console.log(cartProducts);
+        console.log(cartProducts.data);
 
         if (cartProducts.success) {
             setData(cartProducts.data);

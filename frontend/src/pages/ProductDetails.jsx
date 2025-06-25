@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import summaryApi from '../common';
 import { FaStar } from "react-icons/fa6";
 import { FaStarHalf } from "react-icons/fa6";
 import displayINRCurrency from '../helpers/displayCurrency';
 import { IoCartSharp } from "react-icons/io5";
-import HorizontalCardProduct from '../components/HorizontalCardProduct';
-import VerticalCardProduct from '../components/VerticalCardProduct';
 import CategoryProductPage from '../components/CategoryProductPage';
+import addToCart from '../helpers/addToCart';
+import Context from '../context';
+import { toast } from 'react-toastify';
 
 const ProductDetails = () => {
   const params = useParams();
@@ -28,6 +29,10 @@ const ProductDetails = () => {
     price: "",
     sellingPrice: "",
   });
+  
+  const [addToCartProducts, setAddToCartProducts] = useState([]);
+  const [cartLoading, setCartLoading] = useState(true);
+  const { fetchCartProductCounts } = useContext(Context);
 
   const handleMouseEnterProductImage = (imageUrl) => {
     setActiveImage(imageUrl);
@@ -62,7 +67,6 @@ const ProductDetails = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [params])
 
-
   const handleZoomImage = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect();
     const x = (e.clientX - left) / width;
@@ -74,6 +78,53 @@ const ProductDetails = () => {
     })
   }
 
+  const handleAddToCartProduct = async (e, id) => {
+    await addToCart(e, id);
+    fetchCartProductCounts()
+    fetchCartProducts();
+  }
+
+  const fetchCartProducts = async () => {
+    setCartLoading(true);
+    const dataResponse = await fetch(summaryApi.cartProducts.url, {
+      method: summaryApi.cartProducts.method,
+      credentials: 'include',
+    })
+    setCartLoading(false);
+    const cartProducts = await dataResponse.json();
+
+    if (cartProducts.success) {
+      setAddToCartProducts(cartProducts.data);
+    }
+  }
+  const isInCart = addToCartProducts.some(products => products?.productId?._id === params?.id);
+  //console.log("cart",isInCart);
+
+  const handleDeleteProduct = async (id) => {
+    setLoading(true);
+    const dataResponse = await fetch(summaryApi.deleteCartProduct.url, {
+      method: summaryApi.deleteCartProduct.method,
+      credentials: 'include',
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: id,
+      }),
+    })
+    setLoading(false);
+    const deletedProduct = await dataResponse.json();
+
+    if (deletedProduct.success) {
+      await fetchCartProducts();
+      fetchCartProductCounts();
+      toast.success(deletedProduct.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchCartProducts();
+  }, [])
 
   return (
     <>
@@ -181,10 +232,30 @@ const ProductDetails = () => {
                   </div>
                   <div className='flex gap-4 mt-3 md:mt-5 text-sm md:text-xl'>
                     <button className='py-3 px-8 rounded-md text-green-400 cursor-pointer border-2 font-medium hover:bg-green-400 hover:text-white transition-all'>Buy</button>
-                    <button className=' flex justify-center items-center gap-2 py-3 px-8 rounded-md text-green-400 cursor-pointer border-2 font-medium hover:bg-green-400 hover:text-white transition-all'>
-                      Add to Cart
-                      <IoCartSharp className='text-xl md:text-2xl xl:text-3xl' />
-                    </button>
+                    {
+                      cartLoading ? (
+                        <div className='py-3 px-25 rounded-md border-2 border-slate-300 bg-slate-200 animate-pulse'></div>
+                      )
+                      :
+                      (
+                        isInCart ? (
+                        <button className=' flex justify-center items-center gap-2 py-3 px-8 rounded-md text-red-500 cursor-pointer border-2 font-medium hover:bg-red-500 hover:text-white transition-all' onClick={() => {
+                          const cartProduct = addToCartProducts.find(p => p.productId._id === data._id);
+                          if (cartProduct) handleDeleteProduct(cartProduct._id);
+                        }}>
+                          Remove from Cart
+                          <IoCartSharp className='text-xl md:text-2xl xl:text-3xl' />
+                        </button>
+                      )
+                        :
+                        (
+                          <button className=' flex justify-center items-center gap-2 py-3 px-8 rounded-md text-green-400 cursor-pointer border-2 font-medium hover:bg-green-400 hover:text-white transition-all' onClick={(e) => handleAddToCartProduct(e, data?._id)}>
+                            Add to Cart
+                            <IoCartSharp className='text-xl md:text-2xl xl:text-3xl' />
+                          </button>
+                        )
+                      )
+                    }
                   </div>
                   <div className='w-full md:max-w-4xl'>
                     description:- {data?.description}
@@ -194,11 +265,11 @@ const ProductDetails = () => {
             )
         }
       </div>
-        {
-          data?.category && (
-            <CategoryProductPage category={data?.category} heading={"Recommended products"} />
-          )
-        }
+      {
+        data?.category && (
+          <CategoryProductPage category={data?.category} heading={"Recommended products"} />
+        )
+      }
     </>
   )
 }
