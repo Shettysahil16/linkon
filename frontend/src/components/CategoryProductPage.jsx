@@ -30,7 +30,7 @@ const CategoryProductPage = ({ category, heading }) => {
     }, [])
     return (
         <div className='my-4 mr-4 p-4 flex flex-col gap-4 relative'>
-            <h1 className='font-semibold text-2xl sm:text-4xl'>{heading}</h1>
+            <h1 className='font-semibold text-2xl sm:text-4xl capitalize'>{heading}</h1>
             {
                 loading ?
                     (

@@ -11,6 +11,8 @@ import { setUserDetails } from '../../../../kinkon/frontend/src/store/userSlice'
 import Spinner from './Spinner';
 import ROLE from '../common/role';
 import Context from '../context';
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -70,6 +72,17 @@ const Header = () => {
           </div>
 
           <div className='flex gap-6 md:gap-8 items-center cursor-pointer'>
+            <div className='text-4xl' onClick={(() => context.setDarkMode(!context.darkMode))}>
+              {
+                context.darkMode ? (
+                  <MdDarkMode/>
+                )
+                :
+                (
+                  <MdLightMode />
+                )
+              }
+            </div>
             {
               user?._id && (
                 <div className='relative flex flex-col items-center'>

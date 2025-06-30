@@ -20,6 +20,7 @@ function AllProducts() {
 
     if (productsDetails.success) {
       setAllProduct(productsDetails.data || []);
+      //console.log(productsDetails.data);
     }
   }
 

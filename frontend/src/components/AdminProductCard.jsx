@@ -9,7 +9,7 @@ function AdminProductCard({
     fetchProductDetails,
 }) {
     const [openAdminEditProduct, setOpenAdminEditProduct] = useState(false);
-    const [loading, setLoading] = useState(true);
+    //const [loading, setLoading] = useState(true);
     return (
         <div>
             <div>

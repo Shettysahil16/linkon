@@ -22,6 +22,7 @@ const cartProductsController = require('../controller/user/cartProducts');
 const updateCartProductQtyController = require('../controller/user/updateCartProductQty');
 const deleteCartProductController = require('../controller/user/deleteCartProduct');
 const searchProductController = require('../controller/product/searchProduct');
+const filterProductController = require('../controller/product/filterProduct');
 
 
 const router = express.Router();
@@ -42,6 +43,7 @@ router.get("/get-productCategory",getCategoryProduct);
 router.post("/category-product",getCategoryWiseProduct);
 router.post("/product-details",getProductDetails);
 router.get("/search-product",searchProductController);
+router.post("/filter-product",filterProductController);
 
 //Add to Cart API
 router.post("/addtocart",authToken,addToCartController);
