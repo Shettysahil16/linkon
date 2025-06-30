@@ -22,7 +22,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const context = useContext(Context);
   const searchInput = useLocation();
-  const [search, setSearch] = useState(searchInput?.search?.split("=")[1]);
+  const URLSearch = new URLSearchParams(searchInput?.search);
+  const searchQuery = URLSearch.getAll("q")
+  const [search, setSearch] = useState(searchQuery);
 
   const handleUserLogout = async (e) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ const Header = () => {
         navigate(`/search?q=${value}`);
       }
       else{
-        navigate("/")
+        navigate("/");
       }
     }
   
@@ -58,7 +60,7 @@ const Header = () => {
     <>
       <header className='h-20 shadow-md bg-white fixed w-full z-20'>
         <div className='h-full container mx-auto flex items-center justify-between px-4'>
-          <div>
+          <div onClick={() => setSearch("")}>
             <Link to={""}>
               <Logo h={100} w={100} />
             </Link>
@@ -91,7 +93,7 @@ const Header = () => {
                   {
                     user?.role === ROLE.ADMIN && (
                       showAdminPanel && (
-                        <div className='absolute top-17 bg-white p-2 md:flex hidden z-10' onClick={() => setShowAdminPanel(!showAdminPanel)}>
+                        <div className='absolute top-17 bg-white p-2 md:flex hidden z-10' onClick={() => {setShowAdminPanel(!showAdminPanel), setSearch("")}}>
                           <nav>
                             <Link to={"/admin-panel/all-products"} className='w-full whitespace-nowrap hover:bg-slate-200 p-2 rounded-md'>Admin panel</Link>
                           </nav>
@@ -104,7 +106,7 @@ const Header = () => {
             }
             {
               user?._id && (
-                <Link to={"/cart"} className='text-3xl relative cursor-pointer'>
+                <Link to={"/cart"} className='text-3xl relative cursor-pointer' onClick={() => setSearch("")}>
                   <FaShoppingCart />
                   <p className='h-5 w-5 absolute bg-green-500 -top-1 -right-2 rounded-full text-sm text-white flex items-center justify-center p-1'>
                     {
