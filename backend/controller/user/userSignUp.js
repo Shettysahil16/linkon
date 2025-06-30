@@ -30,7 +30,7 @@ const userSignUpController = async(req,res) =>{
         })
         
     } catch (error) {
-        return res.status(404).json({
+        return res.status(500).json({
             message : error.message || "Internal Server Error",
             success : false,
             error : true,

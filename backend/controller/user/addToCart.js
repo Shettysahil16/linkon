@@ -6,9 +6,9 @@ const addToCartController = async(req,res) => {
 
         const currentUserId = req.userId;
 
-        const productExist = await cartProductModel.findOne({productId});
+        const productExist = await cartProductModel.findOne({productId, userId : currentUserId});
         if(productExist){
-            return res.status(404).json({
+            return res.status(400).json({
                 message : "product already added to cart",
                 success : false,
                 error : true,
@@ -33,7 +33,7 @@ const addToCartController = async(req,res) => {
 
 
     } catch (error) {
-        return res.status(404).json({
+        return res.status(500).json({
             message: "Internal Server Error",
             success: false,
             error: true,

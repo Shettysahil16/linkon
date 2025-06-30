@@ -72,17 +72,6 @@ const Header = () => {
           </div>
 
           <div className='flex gap-6 md:gap-8 items-center cursor-pointer'>
-            <div className='text-4xl' onClick={(() => context.setDarkMode(!context.darkMode))}>
-              {
-                context.darkMode ? (
-                  <MdDarkMode/>
-                )
-                :
-                (
-                  <MdLightMode />
-                )
-              }
-            </div>
             {
               user?._id && (
                 <div className='relative flex flex-col items-center'>

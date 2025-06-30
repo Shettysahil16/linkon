@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { LuMinus } from "react-icons/lu";
 import { LuPlus } from "react-icons/lu";
 import Spinner from '../components/Spinner';
+import EmptyCart from '../assets/cart/emptyCart.gif';
 
 
 const Cart = () => {
@@ -97,9 +98,12 @@ const Cart = () => {
 
     return (
         <>
-            <div className='p-4 flex flex-col md:flex-row justify-between gap-10 h-full w-full'>
+            <div>
                 {loading && <Spinner />}
-                <div className='min-w-[60%] flex flex-col gap-8 rounded-sm'>
+               {
+                data.length !== 0 && !loading && (
+                    <div className='p-4 flex flex-col md:flex-row justify-between gap-10 h-full w-full'>
+                        <div className='min-w-[60%] flex flex-col gap-8 rounded-sm'>
                     {
                         data.map((products, index) => {
                             return (
@@ -157,6 +161,17 @@ const Cart = () => {
                         Checkout
                     </div>
                 </div>
+                    </div>
+                )
+               }
+               {
+                data.length === 0 && !loading && (
+                    <div className='h-full mt-[50%] md:mt-[20%] lg:mt-[10%] w-full md:max-w-3xl flex justify-center items-center bg-white mx-auto p-4 text-md md:text-3xl rounded-md font-medium'>
+                        <img src={EmptyCart} alt="empty cart image" className='h-32 w-32 md:h-64 md:w-64' />
+                        <p>🛒 Looks like your cart is empty!</p>
+                    </div>
+                )
+               } 
             </div>
         </>
     )
