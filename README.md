@@ -1,46 +1,118 @@
-# 🛍 Linkon - MERN Stack eCommerce Website
+# 🛍️ Linkon — MERN Stack eCommerce Platform
 
-*Linkon* is a full-featured eCommerce web application built using the *MERN stack* (MongoDB, Express.js, React.js, Node.js), powered by *Vite ⚡* for a fast frontend experience, and uses *Cloudinary ☁* to manage and store product images. It provides users with a smooth online shopping experience and includes features like user authentication, cart management, and order placement. It also includes an admin panel for product and user management.
+**Linkon** is a full-featured eCommerce web application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). It delivers a fast and modern shopping experience powered by **Vite ⚡** and uses **Cloudinary ☁️** for efficient image management.
+
+It includes complete user functionality along with a powerful admin panel for managing products, users, and orders.
+
+---
+
+## 🚀 Features
+
+### 👤 User Features
+- 🛍️ Browse and explore products
+- 🔍 View detailed product pages
+- 🛒 Add/remove items from cart
+- ✅ Secure checkout & order placement
+- 🔐 Authentication (Signup/Login)
+
+### 🛠️ Admin Features
+- 🔑 Admin authentication
+- 📦 Manage products (Add / Edit / Delete)
+- ☁️ Upload product images (Cloudinary)
+- 👥 Manage users & roles
+- 📬 Access customer data
+
+---
+
+## 🧰 Tech Stack
+
+- **Frontend:** React (Vite), Tailwind CSS  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB (Mongoose)  
+- **Authentication:** JWT  
+- **State Management:** Redux  
 
 ---
 
 ## 📁 Project Structure
 
-```plaintext
+```bash
 linkon/
-├── frontend/                     # React app for user interface
-├── backend/                      # Express API server
+├── frontend/     # React frontend
+├── backend/      # Express backend API
+├── sample/       # Screenshots
 ```
+---
+
+## 🖼️ Screenshots
+
+### 📱 Authentication Flow
+
+#### 📝 Signup Page
+![Signup Page](./sample/1-signup-page.png)
+
+#### 🔑 Login Page
+![Signup Page](./sample/3-login-page.png)
+
+
+### 🧭 Main Application
+
+#### 🏠 Home Page
+![Home Page](./sample/5-homepage.png)
+
+#### 📂 Product Category
+![Home Page](./sample/7-airdopes-category.png)
+
+#### 📦 Product Details
+![Home Page](./sample/9-product-page.png)
+
+
+### 🛠️ Admin Panel
+
+#### 📋 All Products
+![Home Page](./sample/11-admin-panel-products-edit.png)
+
+#### ➕ Upload Product
+![Home Page](./sample/upload-product.png)
+
+#### ✏️ Edit Product
+![Home Page](./sample/edit-product.png)
+
+#### 👥 Users List
+![Home Page](./sample/12-admin-panel-users-edit.png)
+
+#### 🔄 Change User Role
+![Home Page](./sample/13-change-user-role.png)
 
 ---
 
-## ✨ Features
+### 📱 Mobile View
 
-### 👤 User Features
-- 🛍 Browse and view product listings
-- 🔍 View detailed product pages
-- 🛒 Add products to cart
-- ✅ Place orders securely
-- 🔐 User registration and login
+#### 📝 Signup Page
+<p align="center">
+  <img src="./sample/2-mobile-signup-page.png" width="300"/>
+</p>
 
-### 🛠 Admin Features
-- 🔑 Secure admin login
-- 📊 Dashboard for managing content
-- ➕ Add, ✏ edit, ❌ delete products
-- ☁ Upload product images (stored via Cloudinary)
-- 📬 View and manage customer orders
+#### 🔑 Login Page
+<p align="center">
+  <img src="./sample/4-mobile-login-page.png" width="300"/>
+</p>
 
+#### 🏠 Home Page
+<p align="center">
+  <img src="./sample/6-mobile-homepage.png" width="300"/>
+</p>
 
-## 🧰 Tech Stack
+#### 📂 Category Page
+<p align="center">
+  <img src="./sample/8-mobile-airdopes-category.png" width="300"/>
+</p>
 
-- *Frontend:* Vite React, Tailwind
-- *Backend:* Node.js, Express.js
-- *Database:* MongoDB with Mongoose
-- *Authentication:* JWT (JSON Web Tokens)
-- *API:* RESTful API with Express
-- *State Management:* Redux
+#### 🏠 Product Page
+<p align="center">
+  <img src="./sample/10-mobile-products-page.png" width="300"/>
+</p>
 
----
 
 ## ⚙ Getting Started
 
