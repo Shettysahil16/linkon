@@ -1,28 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import productCategory from '../helpers/productCategory';
 import summaryApi from '../common';
 import VerticalSearchCard from '../components/VerticalSearchCard';
 import Spinner from '../components/Spinner';
 
 function CategoryProduct() {
-    const params = useParams();
+    //const params = useParams();
     //console.log(params.categoryName);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [sortBy, setSortBy] = useState("");
-    const urlCategoryListObject = {};
-    const [selectCategory, setSelectCategory] = useState(urlCategoryListObject);
     const [filterCategoryList, setFilterCategoryList] = useState([]);
     const [loading, setLoading] = useState(false);
     const location = useLocation();
-    const urlSearch = new URLSearchParams(location.search);
-    const urlCategoryListInArray = urlSearch.getAll("category");
+    //const urlSearch = new URLSearchParams(location.search);
+    //console.log("urlSearch",urlSearch);
+    //const urlCategoryListInArray = urlSearch.getAll("category");
+    //console.log("urlCategoryListInArray",urlCategoryListInArray);
+    //const urlCategoryListObject = {};
+    const [selectCategory, setSelectCategory] = useState({});
 
+    useEffect(() => {
+        const urlSearch = new URLSearchParams(location.search);
+        const urlCategoryListInArray = urlSearch.getAll("category");
 
-    urlCategoryListInArray.forEach(el => {
-        urlCategoryListObject[el] = true
-    })
+        const initialCategoryState = {};
+        urlCategoryListInArray.forEach(el => {
+            initialCategoryState[el] = true;
+        });
+
+        setSelectCategory(initialCategoryState);
+    }, [location.search]);
 
     const handleSelectCategory = (e) => {
         const { value, checked } = e.target;
@@ -58,18 +67,23 @@ function CategoryProduct() {
     }
 
     const handleOnChangeSortBy = (e) => {
-        const { value } = e.target;
+        setSortBy(e.target.value);
+    };
+    useEffect(() => {
+        if (!sortBy || data.length === 0) return;
 
-        setSortBy(value);
+        setData(prev => {
+            const sorted = [...prev];
+            if (sortBy === 'asc') {
+                return sorted.sort((a, b) => a.sellingPrice - b.sellingPrice);
+            }
+            if (sortBy === 'dsc') {
+                return sorted.sort((a, b) => b.sellingPrice - a.sellingPrice);
+            }
+            return sorted;
+        });
+    }, [sortBy]);
 
-        if (value === "asc") {
-            setData(prev => prev.sort((a, b) => a.sellingPrice - b.sellingPrice));
-        }
-
-        if (value === "dsc") {
-            setData(prev => prev.sort((a, b) => b.sellingPrice - a.sellingPrice));
-        }
-    }
 
     useEffect(() => {
         fetchData();
@@ -83,15 +97,15 @@ function CategoryProduct() {
             return null
         }).filter(el => el);
         //console.log("arrayOfCategory", arrayOfCategory);
-        setFilterCategoryList(arrayOfCategory);
-        const urlFormat = arrayOfCategory.map((el, index) => {
-            if ((arrayOfCategory.length - 1) === index) {
-                return `category=${el}`
+        setFilterCategoryList((prev) => {
+            if (JSON.stringify(prev) !== JSON.stringify(arrayOfCategory)) {
+                return arrayOfCategory;
             }
-            return `category=${el}&&`
-        })
-        //console.log(urlFormat);
-        navigate("/product-category?" + urlFormat.join(""))
+            return prev;
+        });
+        const urlFormat = arrayOfCategory.map(el => `category=${el}`);
+        navigate("/product-category?" + urlFormat.join("&"));
+
     }, [selectCategory])
 
     return (
@@ -122,7 +136,7 @@ function CategoryProduct() {
                                 productCategory.map((category, index) => {
                                     return (
                                         <div key={index} className='flex gap-1'>
-                                            <input type="checkbox" name={"category"} value={category?.value} id={category?.value} checked={selectCategory[category?.value]} className='cursor-pointer' onChange={(e) => handleSelectCategory(e)} />
+                                            <input type="checkbox" name={"category"} value={category?.value} id={category?.value} checked={selectCategory[category?.value] || false} className='cursor-pointer' onChange={(e) => handleSelectCategory(e)} />
                                             <label htmlFor={category?.value}>{category?.label}</label>
                                         </div>
                                     )
@@ -135,7 +149,7 @@ function CategoryProduct() {
                     <div className='min-h-[calc(100vh-160px)] max-h-[calc(100vh-160px)] overflow-y-scroll'>
                         {
                             !loading && (
-                                <div className='text-xl md:text-3xl font-medium px-12 pt-4'>Search Results:- {data.length}</div>
+                                <div className='text-xl md:text-3xl font-medium px-12 pt-4'>Search Results :- {data.length}</div>
                             )
                         }
                         {

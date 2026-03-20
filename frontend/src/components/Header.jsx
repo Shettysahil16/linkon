@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Logo from './Logo';
+import Logo from '../assets/Amazon_logo_1.webp';
 import { IoSearchSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
@@ -7,12 +7,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
-import { setUserDetails } from '../../../../kinkon/frontend/src/store/userSlice';
+import { setUserDetails } from '../store/userSlice';
 import Spinner from './Spinner';
 import ROLE from '../common/role';
 import Context from '../context';
-import { MdLightMode } from "react-icons/md";
-import { MdDarkMode } from "react-icons/md";
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -62,7 +61,7 @@ const Header = () => {
         <div className='h-full container mx-auto flex items-center justify-between px-4'>
           <div onClick={() => setSearch("")}>
             <Link to={""}>
-              <Logo h={100} w={100} />
+            <img src={Logo} alt="logo" className='h-10 w-10' />
             </Link>
           </div>
 
