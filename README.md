@@ -57,28 +57,24 @@ linkon/
 git clone https://github.com/Shettysahil16/linkon.git
 cd linkon
 ```
-# Step 2: Install backend dependencies
-```bash
-cd backend
-npm install mongoose express dotenv bcryptjs cors jsonwebtoken nodemon cookie-parser
-```
-# Step 3: create a .env file in /backend and add the following:
+# Step 2: create a .env file in /backend and add the following:
 ```bash
 MONGO_URI = your_mongodb_connection_string
 JWT_SECRET = your_jwt_secret
 FRONTEND_URL= your_frontend_port
 ```
-# Step 4: Start backend server
+# Step 3: Start backend server
 ```bash
+cd backend
 nodemon
 ```
-# Step 5: Install frontend dependencies
+# Step 4: Install frontend dependencies
 ```bash
 cd frontend
 npm install moment react-icons react-redux react-router-dom react-toastify
 ```
 
- # Step 6: Create a `.env` file in `/frontend` and add the following:
+ # Step 5: Create a `.env` file in `/frontend` and add the following:
 
 ```env
 # Create a free Cloudinary account at https://cloudinary.com/
@@ -87,7 +83,7 @@ VITE_APP_CLOUD_NAME=your_cloudinary_id
 ```
 
 
-# Step 7: Start frontend server
+# Step 6: Start frontend server
 ```bash
 npm run dev
 ```
